@@ -23,9 +23,9 @@ MODEL_NAME = 'gemini-3.6-flash'
 # Pydantic Schemas
 # ---------------------------------------------------------
 class EmailClassification(BaseModel):
-    category: str = Field(description="Must be one of: 'document_comparison', 'new_si_request', 'invoice_query', 'general_message', 'spam'")
+    category: str = Field(description="Must be one of: 'BL_COMPARISON', 'SI_REQUEST', 'INVOICE_QUERY', 'GENERAL', 'SPAM'")
     confidence: float = Field(description="Confidence score from 0.0 to 1.0")
-
+    
 class ShipmentDetails(BaseModel):
     shipper: Optional[str] = Field(default=None, description="Name of the shipper. Null if unreadable.")
     consignee: Optional[str] = Field(default=None, description="Name of the consignee. Null if unreadable.")
@@ -47,7 +47,7 @@ class DocumentVerificationSystem:
         self.output_file = os.path.join(base_path, "sample_submission.json")
 
     def classify_email(self, email_data: Dict) -> EmailClassification:
-        prompt = f"Analyze the following email and classify it into one of these exact categories: 'document_comparison', 'new_si_request', 'invoice_query', 'general_message', 'spam'.\nSubject: {email_data.get('subject', '')}\nBody: {email_data.get('body', '')}"
+        prompt = f"Analyze the following email and classify it into one of these exact categories: 'BL_COMPARISON', 'SI_REQUEST', 'INVOICE_QUERY', 'GENERAL', 'SPAM'.\nSubject: {email_data.get('subject', '')}\nBody: {email_data.get('body', '')}"
         
         max_attempts = 5
         for attempt in range(max_attempts):
@@ -162,7 +162,7 @@ class DocumentVerificationSystem:
                 "discrepancies": {}
             }
 
-            if classification.category == "document_comparison":
+            if classification.category == "BL_COMPARISON":
                 attachments = email_data.get("attachments", [])
                 si_file = next((f for f in attachments if "SI" in f), None)
                 bl_file = next((f for f in attachments if "BL" in f), None)
