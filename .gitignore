@@ -1,0 +1,12 @@
+# API Keys and Secrets
+.env
+
+# Virtual Environment
+venv/
+
+# Project Data
+data/
+
+# Python Cache
+__pycache__/
+*.pyc
