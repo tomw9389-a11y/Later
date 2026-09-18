@@ -1,0 +1,14 @@
+{
+    "email_110": {
+        "category": "new_si_request",
+        "needs_human_review": false,
+        "mismatch_found": false,
+        "discrepancies": {}
+    },
+    "email_055": {
+        "category": "document_comparison",
+        "needs_human_review": true,
+        "mismatch_found": false,
+        "discrepancies": {}
+    }
+}
